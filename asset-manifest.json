@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/jonotusboksi/static/css/main.1e63c8dc.css",
+    "main.js": "/jonotusboksi/static/js/main.f4554924.js",
+    "index.html": "/jonotusboksi/index.html",
+    "main.1e63c8dc.css.map": "/jonotusboksi/static/css/main.1e63c8dc.css.map",
+    "main.f4554924.js.map": "/jonotusboksi/static/js/main.f4554924.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1e63c8dc.css",
+    "static/js/main.f4554924.js"
+  ]
+}
