@@ -1,56 +1,67 @@
 {
   "abloc": {
     "name": "ABloc",
+    "id": 52,
     "minTime": 2,
     "maxTime": 9
   },
   "täffä": {
     "name": "Täffä",
+    "id": 3,
     "minTime": 2,
     "maxTime": 20
   },
   "Tietotekniikantalo": {
     "name": "TTalo",
+    "id": 1,
     "minTime": 4,
     "maxTime": 16
   },
   "TUAS": {
     "name": "TUAS",
+    "id": 7,
     "minTime": 1,
     "maxTime": 12
   },
   "Studio Kipsari": {
     "name": "Kipsari",
+    "id": 51,
     "minTime": 3,
     "maxTime": 20
   },
   "Mau-kas": {
     "name": "MauKas",
+    "id": 41,
     "minTime": 6,
     "maxTime": 11
   },
   "Kvarkki": {
     "name": "Kvarkki",
+    "id": 2,
     "minTime": 1,
     "maxTime": 9
   },
   "Alvari": {
     "name": "Alvari",
+    "id": 5,
     "minTime": 2,
     "maxTime": 17
   },
   "Arvo": {
     "name": "Arvo",
+    "id": 59,
     "minTime": 1,
     "maxTime": 9
   },
   "Dipoli Reima": {
     "name": "Dipoli",
+    "id": 45,
     "minTime": 1,
     "maxTime": 20
   },
   "Kipsari Väre": {
     "name": "Väre",
+    "id": 50,
     "minTime": 0,
     "maxTime": 20
   }
