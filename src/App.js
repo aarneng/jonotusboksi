@@ -2,6 +2,7 @@ import myData from "./db.json"
 import fakeMenu from "./fakeMenu.json"
 //eslint-disable-next-line
 import getMenu from "./services/getMenu"
+import getWaitTimes from "./services/getWaitTimes"
 import * as React from 'react';
 import {useState, useEffect} from "react"
 import "./App.css"
@@ -25,17 +26,22 @@ function App() {
   const [data, setData] = useState([])
   const [listItems, setListItems] = useState([])
   const [menuDB, setMenuDB] = useState([])
+  const [waitTimes, setWaitTimes] = useState({})
   
   useEffect(() => {
-    // let menuData = Object.values(fakeMenu)
-    setMenuDB(fakeMenu)
-    let arrData = Object.values(myData)
-    arrData.map(o => o.currentTimeInterval = generateRandomTime(o.minTime, o.maxTime))
-    setData(arrData)
-    setListItems(arrData.map(d => mapBDEntryToLI(d)))
-    // getMenu().then(i => {setMenuDB(i); console.log(i);})
+    console.log("here");
+    getWaitTimes().then(times => {
+      setWaitTimes(times);
+      // let menuData = Object.values(fakeMenu)
+      setMenuDB(fakeMenu)
+      let arrData = Object.values(myData)
+      arrData.map(o => o.currentTimeInterval = getTime(o, times))
+      setData(arrData)
+      setListItems(arrData.map(d => mapBDEntryToLI(d)))
+      // getMenu().then(i => {setMenuDB(i); /*console.log(i);*/})
+    })
     // eslint-disable-next-line
-  }, [menuDB])
+  }, [])
   
   const handleDefaultSort = () => {
     setListItems(data.map(d => mapBDEntryToLI(d)))
@@ -55,13 +61,19 @@ function App() {
     return "#f0582f"
   }
 
-  function generateRandomTime(min, max) {
+  function getTime(o, times=waitTimes) {
+    let bestTime = times[o.name.toLowerCase()]
+    if (bestTime === undefined) return generateRandomTimes(o.minTime, o.maxTime)
+    let timeLow  = Math.round(bestTime.mean - bestTime.variance)
+    let timeHigh = Math.round(bestTime.mean + bestTime.variance)
+    return [timeLow, timeHigh]
+  }
+
+  function generateRandomTimes(min, max) {
     let interval = max - min
     let r1 = Math.floor(Math.random() * interval) + min
     let r2 = Math.floor(Math.random() * interval) + min
-    // console.log(Math.abs(r1 - r2), Math.abs(r1 - r2) >= 8);
     while (Math.abs(r1 - r2) >= 8 && !(1/1.7 <= r1 / r2 && r1/r2 <= 1.7)) {
-      console.log(r1, r2);
       r1 = Math.floor(Math.random() * interval) + min
       r2 = Math.floor(Math.random() * interval) + min
     }
@@ -99,7 +111,6 @@ function App() {
         style={{backgroundColor: timeToColor(1/2 * (time[0] + time[1]))}} 
         key={Math.floor(Math.random()*1e9)}
         className="restaurant"
-        // onClick={() => console.log(menuDB)}
       >
        {innerText}
     </li>
@@ -139,7 +150,6 @@ const Menu = ({availableFood}) => {
   }
 
   let foodValues = Object.values(availableFood)[0]
-  // console.log(foodValues)
   let foods = foodValues.map(i => <li className="foodmenu-li">{i["title"]}</li>)
   return <>
     <button onClick={() => setVisible(false)}>Piilota menu</button>
