@@ -1,3 +1,9 @@
+.wrapper {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .restaurantList {
   /* padding: 0; */
   padding-right: 10px;
@@ -7,7 +13,6 @@
 .restaurant {
   list-style-type: none;
   margin: 30px;
-  /* padding-bottom: 20px; */
   border-radius: 20px;
   display: flex;               /* establish flex container */
   align-items: center;         /* vertically center flex items */
@@ -91,8 +96,23 @@ h3 {
 }
 
 @keyframes p1 {
-  from{--p1:0}
+  from{
+    --p1:0;
+  }
 }
+
+@-moz-keyframes p1 { /* older versions of FF */
+  from {
+    --p1: 0;
+  }
+}
+
+@-webkit-keyframes p1 {
+  from {
+      --p1: 0;
+  }
+}
+
 
 @property --p2 {
   syntax: '<number>';
@@ -153,6 +173,7 @@ h3 {
   font-weight: 450;
   list-style-type: disclosure-closed;
   margin-left: 15px;
+  font-size: 0.65em;
 }
 
 .menu {

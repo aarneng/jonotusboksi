@@ -29,8 +29,6 @@ function App() {
   useEffect(() => {
     // let menuData = Object.values(fakeMenu)
     setMenuDB(fakeMenu)
-    // console.log(fakeMenu);
-    // console.log(menuDB);
     let arrData = Object.values(myData)
     arrData.map(o => o.currentTimeInterval = generateRandomTime(o.minTime, o.maxTime))
     setData(arrData)
@@ -61,6 +59,12 @@ function App() {
     let interval = max - min
     let r1 = Math.floor(Math.random() * interval) + min
     let r2 = Math.floor(Math.random() * interval) + min
+    // console.log(Math.abs(r1 - r2), Math.abs(r1 - r2) >= 8);
+    while (Math.abs(r1 - r2) >= 8 && !(1/1.7 <= r1 / r2 && r1/r2 <= 1.7)) {
+      console.log(r1, r2);
+      r1 = Math.floor(Math.random() * interval) + min
+      r2 = Math.floor(Math.random() * interval) + min
+    }
     return [Math.min(r1, r2), Math.max(r1, r2)]
   }
 
@@ -102,7 +106,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>
         Jonotilanne:
       </h1>
