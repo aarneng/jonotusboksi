@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/jonotusboksi/static/css/main.e0ff016b.css",
-    "main.js": "/jonotusboksi/static/js/main.2b323999.js",
+    "main.css": "/jonotusboksi/static/css/main.d5b51083.css",
+    "main.js": "/jonotusboksi/static/js/main.d504c844.js",
     "index.html": "/jonotusboksi/index.html",
-    "main.e0ff016b.css.map": "/jonotusboksi/static/css/main.e0ff016b.css.map",
-    "main.2b323999.js.map": "/jonotusboksi/static/js/main.2b323999.js.map"
+    "main.d5b51083.css.map": "/jonotusboksi/static/css/main.d5b51083.css.map",
+    "main.d504c844.js.map": "/jonotusboksi/static/js/main.d504c844.js.map"
   },
   "entrypoints": [
-    "static/css/main.e0ff016b.css",
-    "static/js/main.2b323999.js"
+    "static/css/main.d5b51083.css",
+    "static/js/main.d504c844.js"
   ]
 }
