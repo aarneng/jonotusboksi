@@ -31,14 +31,23 @@ function App() {
   useEffect(() => {
     console.log("here");
     getWaitTimes().then(times => {
+      console.log(times);
       setWaitTimes(times);
-      // let menuData = Object.values(fakeMenu)
       setMenuDB(fakeMenu)
       let arrData = Object.values(myData)
       arrData.map(o => o.currentTimeInterval = getTime(o, times))
       setData(arrData)
+      setListItems(arrData.map(d => mapBDEntryToLI(d, times)))
+    }).catch(err => {
+      console.error(err)
+      console.warn("setting all wait time data as fake due to an unknown error")
+
+      setMenuDB(fakeMenu)
+      let arrData = Object.values(myData)
+      arrData.map(o => o.currentTimeInterval = getTime(o))
+      setData(arrData)
       setListItems(arrData.map(d => mapBDEntryToLI(d)))
-      // getMenu().then(i => {setMenuDB(i); /*console.log(i);*/})
+      
     })
     // eslint-disable-next-line
   }, [])
@@ -63,10 +72,10 @@ function App() {
 
   function getTime(o, times=waitTimes) {
     let bestTime = times[o.name.toLowerCase()]
-    if (bestTime === undefined) return generateRandomTimes(o.minTime, o.maxTime)
+    if (bestTime === undefined) return [...generateRandomTimes(o.minTime, o.maxTime), false]
     let timeLow  = Math.round(bestTime.mean - bestTime.variance)
     let timeHigh = Math.round(bestTime.mean + bestTime.variance)
-    return [timeLow, timeHigh]
+    return [timeLow, timeHigh, true]
   }
 
   function generateRandomTimes(min, max) {
@@ -80,19 +89,24 @@ function App() {
     return [Math.min(r1, r2), Math.max(r1, r2)]
   }
 
-  function mapBDEntryToLI(entry) {
-    let time = entry.currentTimeInterval
-    let t1percent = time[0] <= 20 ? time[0]/0.2 : 100
-    let t2percent = time[1] <= 20 ? time[1]/0.2 : 100
-    let innerText = [
+  function mapBDEntryToLI(entry, times=waitTimes) {
+    let innerText;
+    let name = entry.name.toLowerCase()
+    let timePressed = times[name]?.secondsSincePressed
+    if (timePressed === undefined || timePressed <= 60*20) {
+      let time = entry.currentTimeInterval
+      let t1percent = time[0] <= 20 ? time[0]/0.2 : 100
+      let t2percent = time[1] <= 20 ? time[1]/0.2 : 100
+      let name = `Ravintola ${entry.name}` + (time[2] ? " ✔️: " : ": ")
+      innerText = [
         <h2>
           {
-            `Ravintola ${entry.name}: `
+            name
           }
           <br/>
           <Menu 
             availableFood={menuDB[entry.id]} 
-          />
+            />
         </h2>,
           <div className="pie pie1 animate1 no-round" style={{"--p1":t2percent, "--c1":"#8e8e8e"}}>
             <div className="pie2 animate2 no-round" style={{"--p2":t1percent, "--c2":"#cbcbcb"}}>
@@ -106,14 +120,40 @@ function App() {
               </div>
             </div>
           </div>
-    ]
+      ]
+      return <li 
+          style={{backgroundColor: timeToColor(1/2 * (time[0] + time[1]))}} 
+          key={Math.floor(Math.random()*1e9)}
+          className="restaurant"
+        >
+         {innerText}
+      </li>
+    }
+    else {
+      let time = entry.currentTimeInterval
+      let name = `Ravintola ${entry.name}` + (time[2] ? " ✔️: " : ": ")
+      innerText = [
+        <h2>
+          {
+            name
+          }
+          <br/>
+          <Menu 
+            availableFood={menuDB[entry.id]} 
+            />
+        </h2>,
+        <div className="pie">
+          No data
+        </div>
+      ]
     return <li 
-        style={{backgroundColor: timeToColor(1/2 * (time[0] + time[1]))}} 
+        style={{backgroundColor: "grey"}} 
         key={Math.floor(Math.random()*1e9)}
         className="restaurant"
       >
        {innerText}
     </li>
+    }
   }
 
   return (
