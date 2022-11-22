@@ -1,3 +1,10 @@
+# Jonotusboksi
+
+![Boksi](imgs/boksi.png "Logo")
+
+Jonotusboksi on palvelu joka tarjoaa sinulle helpon tavan implementoidaoida jonotusaikojen seuraaja
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
