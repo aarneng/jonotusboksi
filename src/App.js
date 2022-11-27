@@ -21,6 +21,12 @@ import "./App.css"
  * git push origin master
  */
 
+/* 
+
+TODO: showing menu is fucked for some reason
+
+*/
+
 function App() {
 
   const [data, setData] = useState([])
@@ -34,6 +40,7 @@ function App() {
       console.log(times);
       setWaitTimes(times);
       setMenuDB(fakeMenu)
+      console.log(fakeMenu);
       let arrData = Object.values(myData)
       arrData.map(o => o.currentTimeInterval = getTime(o, times))
       setData(arrData)
@@ -57,8 +64,19 @@ function App() {
   };
 
   const handleFromSmallestSort = () => {
+    function getTime(e) {
+      let timePressed = waitTimes[e.name.toLowerCase()]?.secondsSincePressed
+      console.log(timePressed);
+      console.log(waitTimes);
+      if (timePressed === undefined || timePressed <= 60*20)
+        return e.currentTimeInterval[0]
+      return 999;
+      
+    }
     let sortedCpy = [...data]  // copy of the array
-    sortedCpy.sort((a, b) => a.currentTimeInterval[0] - b.currentTimeInterval[0])
+    sortedCpy.sort((a, b) => getTime(a) - getTime(b))
+    sortedCpy.forEach(i => console.log(i, getTime(i)))
+    console.log(sortedCpy)
     setListItems(sortedCpy.map(d => mapBDEntryToLI(d)))
   };
   
